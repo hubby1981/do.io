@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/airdo.io.iml" filepath="$PROJECT_DIR$/airdo.io.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/do.io.iml" filepath="$PROJECT_DIR$/do.io.iml" />
     </modules>
   </component>
 </project>
