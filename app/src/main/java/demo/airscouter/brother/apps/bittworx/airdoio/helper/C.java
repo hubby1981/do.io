@@ -1,4 +1,4 @@
-package demo.airscouter.brother.apps.bittworx.airdoio;
+package demo.airscouter.brother.apps.bittworx.airdoio.helper;
 
 import android.graphics.Color;
 

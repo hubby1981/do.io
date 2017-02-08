@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">do.io</string>
+
+    <string name="sample_medical">MEDICAL</string>
+    <string name="sample_enterprise">ENTERPRISE</string>
+    <string name="sample_finance">FINANCE</string>
+
+    <string name="sample_text">Sample do.io</string>
+
+    <string name="sample_view_title">Tap on a sample to view</string>
+
+
+    <string name="sample_medical_header_line0">MEDICAL - St. Thomas Clinic</string>
+    <string name="sample_enterprise_header_line0">ENTERPRISE - Software Design Corp.</string>
+    <string name="sample_finance_header_line0">FINANCE - Private Fund Asc.</string>
+    <string name="sample_medical_header_line1">Dr. Stanley Peter - Head of Oncology</string>
+    <string name="sample_enterprise_header_line1">Sandra Phillips - CTO</string>
+    <string name="sample_finance_header_line1">Brian Meyers - Head of Finance</string>
+
+
+
+    <string name="node_workspace">Workspace</string>
+    <string name="node_medical_tree_002">Stations</string>
+    <string name="node_medical_tree_003">Wiki</string>
+    <string name="node_medical_tree_004">Oncology</string>
+    <string name="node_medical_tree_005">Emergency</string>
+    <string name="node_medical_tree_006">Room </string>
+
 </resources>
