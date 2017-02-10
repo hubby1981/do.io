@@ -54,8 +54,5 @@ public class FinanceView extends BaseView {
     protected int getHeaderTextLine1() {
         return R.string.sample_finance_header_line1;
     }
-    @Override
-    protected Node getNode() {
-        return new Node(TE.get(R.string.node_workspace),null);
-    }
+
 }

@@ -22,8 +22,19 @@
     <string name="node_workspace">Workspace</string>
     <string name="node_medical_tree_002">Stations</string>
     <string name="node_medical_tree_003">Wiki</string>
+    <string name="node_medical_tree_007">QM System</string>
+
     <string name="node_medical_tree_004">Oncology</string>
     <string name="node_medical_tree_005">Emergency</string>
     <string name="node_medical_tree_006">Room </string>
+
+    <string name="node_enterprise_tree_001">Projects</string>
+    <string name="node_enterprise_tree_002">Database</string>
+    <string name="node_enterprise_tree_003">Team</string>
+    <string name="node_enterprise_tree_004">2017</string>
+    <string name="node_enterprise_tree_005">2016</string>
+    <string name="node_enterprise_tree_006">2015</string>
+    <string name="node_enterprise_tree_007">2014</string>
+    <string name="node_enterprise_tree_008">2013</string>
 
 </resources>

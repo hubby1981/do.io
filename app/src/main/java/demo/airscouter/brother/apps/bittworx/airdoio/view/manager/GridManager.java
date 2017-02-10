@@ -44,4 +44,8 @@ public class GridManager {
 
         return new RectF(v.left,h.top,v2.right,h2.bottom);
     }
+
+    public Grid getToolbar() {
+        return toolbar;
+    }
 }

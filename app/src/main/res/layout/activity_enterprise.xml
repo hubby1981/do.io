@@ -11,5 +11,6 @@
     tools:context="demo.airscouter.brother.apps.bittworx.airdoio.EnterpriseActivity">
     <demo.airscouter.brother.apps.bittworx.airdoio.view.EnterpriseView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/mainView"/>
 </RelativeLayout>

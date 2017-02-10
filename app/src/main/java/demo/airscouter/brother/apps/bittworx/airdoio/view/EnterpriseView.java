@@ -11,6 +11,8 @@ import demo.airscouter.brother.apps.bittworx.airdoio.helper.B;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.C;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.TE;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Node;
+import demo.airscouter.brother.apps.bittworx.airdoio.poco.setups.EnterpriseNodeSetup;
+import demo.airscouter.brother.apps.bittworx.airdoio.poco.setups.MedicalNodeSetup;
 
 /**
  * Created by marcel.weissgerber on 08.02.2017.
@@ -28,6 +30,8 @@ public class EnterpriseView extends BaseView {
 
         toolbarPaint.setStyle(Paint.Style.FILL);
         toolbarPaint.setColor(Color.argb(150, C.getRedArray()[access], C.getGreenArray()[access], C.getBlueArray()[access]));
+        node = EnterpriseNodeSetup.getEnterpriseNodeSample();
+
     }
 
     @Override
@@ -55,8 +59,5 @@ public class EnterpriseView extends BaseView {
         return B.get(R.drawable.enterprise);
     }
 
-    @Override
-    protected Node getNode() {
-        return new Node(TE.get(R.string.node_workspace),null);
-    }
+
 }

@@ -11,9 +11,13 @@ import android.graphics.RectF;
 public class TextHelper {
 
     public static void drawText(Canvas canvas, int text, RectF bounds, float factor, Paint fontBackground) {
-        float sizeT = fontBackground.measureText(TE.get(text));
+        drawText(canvas,TE.get(text),bounds,factor,fontBackground);
+    }
 
-        canvas.drawText(TE.get(text), bounds.centerX() - sizeT / 2, bounds.centerY() + fontBackground.getTextSize() * factor, fontBackground);
+    public static void drawText(Canvas canvas, String text, RectF bounds, float factor, Paint fontBackground) {
+        float sizeT = fontBackground.measureText(text);
+
+        canvas.drawText(text, bounds.centerX() - sizeT / 2, bounds.centerY() + fontBackground.getTextSize() * factor, fontBackground);
     }
 
     public static void drawTextLeft(Canvas canvas, int text, RectF bounds, float factor, Paint fontBackground) {
@@ -23,6 +27,6 @@ public class TextHelper {
     public static void drawTextLeft(Canvas canvas, String text, RectF bounds, float factor, Paint fontBackground) {
 
 
-        canvas.drawText(text, bounds.left+4, bounds.centerY() + bounds.height() / 5, fontBackground);
+        canvas.drawText(text, bounds.left+8, bounds.centerY() + bounds.height() / 6, fontBackground);
     }
 }

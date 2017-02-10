@@ -21,7 +21,7 @@ public class MedicalView extends BaseView {
     private Paint headerPaint = new Paint();
     private Paint toolbarPaint = new Paint();
     private int access = 1;
-    private Node node = MedicalNodeSetup.getMedicalNodeSample();
+
 
     public MedicalView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,7 +30,7 @@ public class MedicalView extends BaseView {
 
         toolbarPaint.setStyle(Paint.Style.FILL);
         toolbarPaint.setColor(Color.argb(150, C.getRedArray()[access], C.getGreenArray()[access], C.getBlueArray()[access]));
-
+        node = MedicalNodeSetup.getMedicalNodeSample();
 
     }
 
@@ -49,10 +49,6 @@ public class MedicalView extends BaseView {
         return B.get(R.drawable.medical);
     }
 
-    @Override
-    protected Node getNode() {
-        return node;
-    }
 
     @Override
     protected int getHeaderTextLine0() {

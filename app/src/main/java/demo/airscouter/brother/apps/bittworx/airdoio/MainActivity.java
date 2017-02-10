@@ -1,7 +1,10 @@
 package demo.airscouter.brother.apps.bittworx.airdoio;
 
+import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.service.voice.VoiceInteractionService;
+import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -38,5 +41,12 @@ public class MainActivity extends AppCompatActivity {
     public void startIntent(Class intentClass){
         Intent intent = new Intent(this,intentClass);
         startActivity(intent);
+    }
+
+
+    public void startVoice(){
+        VoiceInteractor interactor = this.getVoiceInteractor();
+
+   
     }
 }

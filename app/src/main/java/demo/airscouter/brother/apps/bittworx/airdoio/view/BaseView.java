@@ -11,13 +11,18 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import demo.airscouter.brother.apps.bittworx.airdoio.BaseActivity;
 import demo.airscouter.brother.apps.bittworx.airdoio.MainActivity;
 import demo.airscouter.brother.apps.bittworx.airdoio.R;
+import demo.airscouter.brother.apps.bittworx.airdoio.helper.B;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.C;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.G;
+import demo.airscouter.brother.apps.bittworx.airdoio.helper.TE;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.TextHelper;
+import demo.airscouter.brother.apps.bittworx.airdoio.poco.Container;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Node;
 import demo.airscouter.brother.apps.bittworx.airdoio.view.manager.Grid;
 import demo.airscouter.brother.apps.bittworx.airdoio.view.manager.GridManager;
@@ -34,7 +39,12 @@ public abstract class BaseView extends View {
     private Paint footerPaint = new Paint();
 
     private GridManager contentManager;
+    private BaseActivity baseActivity;
+    private Container active = null;
+    private HashMap<RectF, Container> tiles;
+    private RectF close = null;
 
+    protected Node node;
 
     public BaseView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -50,6 +60,10 @@ public abstract class BaseView extends View {
 
     }
 
+    public void setBaseActivity(BaseActivity activity) {
+        baseActivity = activity;
+    }
+
 
     protected abstract Paint getHeaderPaint();
 
@@ -61,7 +75,9 @@ public abstract class BaseView extends View {
 
     protected abstract Bitmap getLogo();
 
-    protected abstract Node getNode();
+    protected Node getNode() {
+        return node == null ? new Node(TE.get(R.string.node_workspace), null) : node;
+    }
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -72,6 +88,7 @@ public abstract class BaseView extends View {
 
         RectF header = new RectF(bounds.left, bounds.top, bounds.right, bounds.height() / 10);
 
+
         RectF toolbar = new RectF(bounds.left, header.bottom, bounds.left + bounds.width() / 10, bounds.bottom);
         RectF toolbarComplete = new RectF(bounds.left, header.top, bounds.left + bounds.width() / 10, bounds.bottom);
 
@@ -81,12 +98,12 @@ public abstract class BaseView extends View {
         fontBackgroundContent.setTextSize(header.height() / 2.75f);
 
 
-        //fontBackgroundHeader.setShadowLayer(2,0,0,Color.BLACK);
-
         canvas.drawRect(header, getHeaderPaint());
         canvas.drawRect(toolbar, getToolbarPaint());
         canvas.drawRect(footer, footerPaint);
 
+        Grid headerRight = G.getVerticalLines(header,header.height()*2);
+        B.drawBitmap(canvas,R.drawable.doio_white,G.shrinkRectF(headerRight.get(headerRight.size()-1),10,10));
 
         RectF content = new RectF(toolbar.right, bounds.top, header.right, bounds.bottom);
 
@@ -105,24 +122,58 @@ public abstract class BaseView extends View {
         content = new RectF(toolbar.right, header.bottom, header.right, footer.top);
         if (contentManager == null) {
             contentManager = new GridManager(G.getVerticalLines(content, content.width() / 9),
-                    G.getHorizontalLines(content, content.height() / 9), G.getHorizontalLines(toolbar, toolbar.height() / 10));
-        }
-        if(getNode()!=null){
-            drawNode(canvas);
-        }
+                    G.getHorizontalLines(content, content.height() / 9), G.getHorizontalLines(toolbar, toolbar.height() / 8));
 
 
+        }
+        if (active == null) {
+            active = getNode();
+        }
+        if (active != null) {
+            drawContainer(canvas, active);
+        }
 
 
     }
-    private void drawNode(Canvas canvas){
 
+    private void drawContainer(Canvas canvas, Container container) {
 
-        Node n = getNode();
+        if (container != null && container.isNode()) {
+            drawNode(canvas, (Node) container);
+        }
 
-        TextHelper.drawTextLeft(canvas,n.getTitle(),contentManager.getMergeRect(0,0,9,0),0,fontBackgroundContent);
+    }
 
-        n.draw(canvas,getToolbarPaint(),contentManager,fontBackgroundHeader);
+    private void drawNode(Canvas canvas, Node node) {
+        TextHelper.drawTextLeft(canvas, node.getTitleEx(), contentManager.getMergeRect(0, 0, 9, 0), 0, fontBackgroundContent);
+
+        tiles = node.draw(canvas, getToolbarPaint(), contentManager, fontBackgroundHeader);
+
+        if (contentManager != null) {
+            int shrinkWidth = 4;
+            int shrinkHeight = 6;
+
+            RectF home = G.shrinkRectF(contentManager.getToolbar().get(1), shrinkWidth, shrinkHeight);
+            RectF parent = G.shrinkRectF(contentManager.getToolbar().get(2), shrinkWidth, shrinkHeight);
+            close = G.shrinkRectF(contentManager.getToolbar().get(contentManager.getToolbar().size() - 1), shrinkWidth, shrinkHeight);
+            B.drawBitmap(canvas, R.drawable.close, close);
+
+            if(((Node)active).getParent()!=null) {
+                tiles.put(home, getNode());
+
+                B.drawBitmap(canvas, R.drawable.home, home);
+
+                if (active != null && active.isNode()) {
+                    Node parentActive = (Node) active;
+                    if (parentActive != null && parentActive.getParent() != null) {
+                        tiles.put(parent, parentActive.getParent());
+                        B.drawBitmap(canvas, R.drawable.parent, parent);
+
+                    }
+                }
+            }
+
+        }
     }
 
 
@@ -130,7 +181,23 @@ public abstract class BaseView extends View {
     public boolean onTouchEvent(MotionEvent event) {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (close != null && close.contains(event.getX(), event.getY())) {
+                if (baseActivity != null) {
+                    baseActivity.close();
+                }
+            } else if (tiles != null) {
+                for (Map.Entry<RectF, Container> tile : tiles.entrySet()) {
+                    if (tile.getKey().contains(event.getX(), event.getY())) {
+                        if(tile.getValue().isNode()){
+                            active = tile.getValue();
 
+                        }
+                        if (baseActivity != null) {
+                            baseActivity.refresh();
+                        }
+                    }
+                }
+            }
         }
         return false;
     }
