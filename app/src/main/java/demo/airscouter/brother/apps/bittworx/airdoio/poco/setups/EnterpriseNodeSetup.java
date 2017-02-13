@@ -9,6 +9,7 @@ import demo.airscouter.brother.apps.bittworx.airdoio.poco.Container;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Document;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Node;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.enterprise.ProjectNode;
+import demo.airscouter.brother.apps.bittworx.airdoio.view.content.enterprise.Projects2017Documents;
 
 /**
  * Created by marcel.weissgerber on 10.02.2017.
@@ -42,13 +43,13 @@ public class EnterpriseNodeSetup {
 
     private static List<Container> getDocuments(){
         List<Container> result = new ArrayList<>();
-        result.add(new Document("Material",3.2f));
-        result.add(new Document("Lines"));
-        result.add(new Document("Softweb"));
-        result.add(new Document("Storm"));
-        result.add(new Document("Maryyage",2.3f));
-        result.add(new Document("Silentsurf"));
-        result.add(new Document("Cast-A-Way"));
+        result.add(new Document("1",3.2f).setSite(Projects2017Documents.getDoc1()));
+        result.add(new Document("2"));
+        result.add(new Document("3"));
+        result.add(new Document("4").setSite(Projects2017Documents.getDoc2()));
+        result.add(new Document("5",2.3f));
+        result.add(new Document("6"));
+        result.add(new Document("7"));
 
         return result;
     }

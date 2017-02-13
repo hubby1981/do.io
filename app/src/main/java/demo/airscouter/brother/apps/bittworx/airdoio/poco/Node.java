@@ -133,7 +133,7 @@ public class Node extends Container {
             } else if (container.isDocument()) {
 
                 canvas.drawRect(body, injectPaint);
-
+                ((Document)container).setParent(this);
                 TextHelper.drawText(canvas, Integer.toString(index), body, 1, fontPaint);
                 result.put(tile, container);
 
@@ -147,5 +147,9 @@ public class Node extends Container {
             }
         }
         return result;
+    }
+
+    public List<Container> getDocuments(){
+        return documents;
     }
 }

@@ -1,6 +1,7 @@
 package demo.airscouter.brother.apps.bittworx.airdoio;
 
 import android.app.VoiceInteractor;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.service.voice.VoiceInteractionService;
@@ -18,12 +19,14 @@ public class MainActivity extends AppCompatActivity {
     public static Resources res;
     public static DbHelper DATA;
     public final static boolean TRANSPARENT=false;
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         res = getResources();
         DATA = new DbHelper(this);
+        context=getApplicationContext();
         setContentView(R.layout.activity_main);
 
         DropCast cast = new MockCast();

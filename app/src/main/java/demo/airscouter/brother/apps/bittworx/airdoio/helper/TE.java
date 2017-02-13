@@ -11,4 +11,7 @@ public class TE {
     public static String get(int id){
         return MainActivity.res.getString(id);
     }
+
+
+
 }

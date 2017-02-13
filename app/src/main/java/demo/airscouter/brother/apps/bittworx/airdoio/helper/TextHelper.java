@@ -1,6 +1,7 @@
 package demo.airscouter.brother.apps.bittworx.airdoio.helper;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
@@ -11,7 +12,7 @@ import android.graphics.RectF;
 public class TextHelper {
 
     public static void drawText(Canvas canvas, int text, RectF bounds, float factor, Paint fontBackground) {
-        drawText(canvas,TE.get(text),bounds,factor,fontBackground);
+        drawText(canvas, TE.get(text), bounds, factor, fontBackground);
     }
 
     public static void drawText(Canvas canvas, String text, RectF bounds, float factor, Paint fontBackground) {
@@ -27,6 +28,14 @@ public class TextHelper {
     public static void drawTextLeft(Canvas canvas, String text, RectF bounds, float factor, Paint fontBackground) {
 
 
-        canvas.drawText(text, bounds.left+8, bounds.centerY() + bounds.height() / 6, fontBackground);
+        canvas.drawText(text, bounds.left + 8, bounds.centerY() + bounds.height() / 6, fontBackground);
+    }
+
+    public static Paint getFont(RectF bounds) {
+        Paint font = new Paint();
+        font.setStyle(Paint.Style.FILL);
+        font.setTextSize(bounds.height() / 3);
+        font.setColor(Color.WHITE);
+        return font;
     }
 }

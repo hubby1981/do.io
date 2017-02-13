@@ -32,8 +32,15 @@ public class G {
         return result;
     }
 
+
+
+
     public static RectF shrinkRectF(RectF rectF, int shrinkWidth,int shrinkHeight) {
         return new RectF(rectF.left + rectF.width() / shrinkWidth, rectF.top + rectF.height() / shrinkHeight, rectF.right - rectF.width() / shrinkWidth, rectF.bottom - rectF.height() / shrinkHeight);
+    }
+
+    public static RectF getRectF(Canvas canvas){
+        return new RectF(canvas.getClipBounds().left, canvas.getClipBounds().top, canvas.getClipBounds().right, canvas.getClipBounds().bottom);
     }
 
     public static Grid getVerticalLines(RectF bounds, float width) {

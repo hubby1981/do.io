@@ -26,7 +26,8 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".FinanceActivity"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".DocumentViewActivity"></activity>
     </application>
 
 </manifest>

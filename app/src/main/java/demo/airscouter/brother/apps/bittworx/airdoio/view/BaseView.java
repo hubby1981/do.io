@@ -23,6 +23,7 @@ import demo.airscouter.brother.apps.bittworx.airdoio.helper.G;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.TE;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.TextHelper;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Container;
+import demo.airscouter.brother.apps.bittworx.airdoio.poco.Document;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Node;
 import demo.airscouter.brother.apps.bittworx.airdoio.view.manager.Grid;
 import demo.airscouter.brother.apps.bittworx.airdoio.view.manager.GridManager;
@@ -188,9 +189,11 @@ public abstract class BaseView extends View {
             } else if (tiles != null) {
                 for (Map.Entry<RectF, Container> tile : tiles.entrySet()) {
                     if (tile.getKey().contains(event.getX(), event.getY())) {
-                        if(tile.getValue().isNode()){
+                        if (tile.getValue().isNode()) {
                             active = tile.getValue();
 
+                        }else if(tile.getValue().isDocument()&&baseActivity!=null){
+                            baseActivity.openDocument((Document)tile.getValue());
                         }
                         if (baseActivity != null) {
                             baseActivity.refresh();
