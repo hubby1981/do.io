@@ -32,10 +32,15 @@ public class TextHelper {
     }
 
     public static Paint getFont(RectF bounds) {
+
+        return getFont(bounds,Color.WHITE);
+    }
+
+    public static Paint getFont(RectF bounds,int color) {
         Paint font = new Paint();
         font.setStyle(Paint.Style.FILL);
         font.setTextSize(bounds.height() / 3);
-        font.setColor(Color.WHITE);
+        font.setColor(color);
         return font;
     }
 }

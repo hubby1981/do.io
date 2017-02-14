@@ -14,9 +14,18 @@ import demo.airscouter.brother.apps.bittworx.airdoio.helper.Iter;
 public abstract class ElemIter<T> {
     private List<T> list = new ArrayList<>();
     private int area = 0;
-
+    private long period=0l;
     public ElemIter() {
 
+    }
+
+
+    public ElemIter(long period){
+        this.period = period;
+    }
+
+    public long getPeriod(){
+        return period;
     }
 
     protected abstract boolean isSingle();
@@ -77,9 +86,30 @@ public abstract class ElemIter<T> {
 
     public void prev() {
         area = Iter.prev(area, list.size());
+        onPrev();
     }
 
     public void next() {
-        area = Iter.next(area, list.size());
+        area = Iter.next(area, list.size());onNext();
     }
+
+
+    public void onNext(){
+
+
+    }
+
+    public void onPrev(){
+
+    }
+
+
+    public void onEnter(){
+
+    }
+
+    public void onLeave(){
+
+    }
+
 }

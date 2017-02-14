@@ -66,6 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         ContextData.document.set(document);
+        ContextData.document.onEnter();
         startActivity(new Intent(this, DocumentViewActivity.class));
     }
 }

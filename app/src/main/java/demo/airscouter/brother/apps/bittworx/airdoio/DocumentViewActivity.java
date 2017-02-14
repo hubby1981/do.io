@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.View;
 
+import demo.airscouter.brother.apps.bittworx.airdoio.helper.ContextData;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Document;
 import demo.airscouter.brother.apps.bittworx.airdoio.view.DocumentView;
 
@@ -28,7 +29,7 @@ public class DocumentViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document_view);
-
+        ContextData.activity = this;
         View view = findViewById(R.id.viewDoc);
         if (view != null) {
             ((DocumentView) view).setActivity(this);
@@ -39,6 +40,7 @@ public class DocumentViewActivity extends AppCompatActivity {
 
 
     public void close() {
+        ContextData.activity=null;
         this.finish();
     }
 
