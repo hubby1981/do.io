@@ -37,9 +37,15 @@ public class TextHelper {
     }
 
     public static Paint getFont(RectF bounds,int color) {
+
+        return getFont(bounds,color,(int)(bounds.height() / 3));
+    }
+
+    public static Paint getFont(RectF bounds,int color,int size) {
         Paint font = new Paint();
         font.setStyle(Paint.Style.FILL);
-        font.setTextSize(bounds.height() / 3);
+
+        font.setTextSize(size);
         font.setColor(color);
         return font;
     }

@@ -1,6 +1,7 @@
 package demo.airscouter.brother.apps.bittworx.airdoio.view.content;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 
 import java.util.Timer;
 
@@ -22,9 +23,9 @@ public class Site extends ElemIter<ContentArea> {
     }
 
     @Override
-    protected void drawElem(ContentArea elem, Canvas canvas) {
+    protected void drawElem(ContentArea elem, Canvas canvas,RectF bounds) {
         if(elem!=null){
-            elem.draw(canvas);
+            elem.draw(canvas,bounds);
         }
     }
 }

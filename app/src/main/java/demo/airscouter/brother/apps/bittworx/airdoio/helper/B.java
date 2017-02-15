@@ -23,5 +23,7 @@ public class B {
             canvas.drawBitmap(bit,new Rect(0,0,bit.getWidth(),bit.getHeight()),rectF,null);
 
         }
+        if(!bit.isRecycled())
+            bit.recycle();
     }
 }

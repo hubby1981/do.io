@@ -16,6 +16,7 @@ import demo.airscouter.brother.apps.bittworx.airdoio.DocumentViewActivity;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.C;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.ContextData;
 import demo.airscouter.brother.apps.bittworx.airdoio.helper.G;
+import demo.airscouter.brother.apps.bittworx.airdoio.helper.TextHelper;
 import demo.airscouter.brother.apps.bittworx.airdoio.poco.Document;
 import demo.airscouter.brother.apps.bittworx.airdoio.view.content.ContentArea;
 import demo.airscouter.brother.apps.bittworx.airdoio.view.gesture.GestureView;
@@ -31,7 +32,7 @@ public class DocumentView extends GestureView {
 
     Grid vertical;
     Grid horizontal;
-
+    Grid horizontalLayer;
     Paint backLeft = new Paint();
     Paint backMiddle = new Paint();
     Paint backRight = new Paint();
@@ -70,14 +71,31 @@ public class DocumentView extends GestureView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean ret =true;
+        if (horizontalLayer != null && horizontalLayer.size() > 0) {
+            int index = 0;
+            for (RectF rectF : horizontalLayer) {
+                if (rectF.contains(event.getX(), event.getY())) {
+                    if (ContextData.document != null) {
+                        if (ContextData.document.get() != null&&  ContextData.document.get().getSite()!=null) {
+                            ContextData.document.get().getSite().setArea(index);
+                            ret=false;
+                            if (ContextData.activity != null)
+                                ContextData.activity.refresh();
+                        }
+                    }
+                }
+                index++;
+            }
+        }
+        if(ret)
+            ret = super.onTouchEvent(event);
 
-        boolean ret = super.onTouchEvent(event);
-        if(!ret) {
-            if (ContextData.document != null && ContextData.document.getAll() != null) {
+        if (!ret) {
+             if (ContextData.document != null && ContextData.document.getAll() != null) {
                 for (Document document : ContextData.document.getAll()) {
-                    if (document.getSite() != null) {
+                    if (document != null && document.getSite() != null) {
                         for (ContentArea contentArea : document.getSite().getAll()) {
                             contentArea.touch(event.getX(), event.getY());
                         }
@@ -92,6 +110,7 @@ public class DocumentView extends GestureView {
     @Override
     public void onDraw(Canvas canvas) {
         RectF bounds = new RectF(canvas.getClipBounds().left, canvas.getClipBounds().top, canvas.getClipBounds().right, canvas.getClipBounds().bottom);
+        RectF layers = G.getRectFShrinkWidth(bounds, 30);
         horizontal = G.getHorizontalLines(bounds, bounds.height() / 3);
         vertical = G.getVerticalLines(horizontal.get(1), bounds.width() / 3);
 
@@ -107,9 +126,27 @@ public class DocumentView extends GestureView {
         if (isShowBottom())
             canvas.drawRect(horizontal.get(2), backBottom);
 
-        if(ContextData.document!=null){
+        if (ContextData.document != null) {
+            if (ContextData.document.get() != null) {
+                Paint p = new Paint();
+                p.setStyle(Paint.Style.FILL);
+                p.setColor(Color.argb(185, C.getRedArray()[7], C.getGreenArray()[7], C.getBlueArray()[7]));
+                ContextData.document.get().getSite().draw(canvas, G.getRectFWithSources(bounds, layers.right));
+                int max = ContextData.document.get().getSite().size();
+                horizontalLayer = G.getHorizontalLines(layers, bounds.height() / max);
+                int all = ContextData.document.get().getSite().getAll().size();
+                int index = 0;
+                for (RectF rectF : horizontalLayer) {
 
-            ContextData.document.get().getSite().draw(canvas);
+                    TextHelper.drawText(canvas,Integer.toString(index+1),rectF,0.5f,TextHelper.getFont(rectF,Color.WHITE,30));
+                    if (index < all) {
+                        canvas.drawRect(rectF, p);
+                    }
+
+                    index++;
+                }
+                G.showGrid(canvas, horizontalLayer, Color.WHITE);
+            }
         }
 
 
@@ -161,7 +198,7 @@ public class DocumentView extends GestureView {
         if (activity != null) {
             if (activity != null) {
                 //setShowTop(!showTop);
-                if(ContextData.document!=null){
+                if (ContextData.document != null) {
                     ContextData.document.get().getSite().next();
                 }
                 activity.refresh();
@@ -173,9 +210,9 @@ public class DocumentView extends GestureView {
     public void onSwipeLeft() {
         if (activity != null) {
             //setShowLeft(!showLeft);
-            if(ContextData.document!=null){
+            if (ContextData.document != null) {
                 ContextData.document.prev();
-                while (ContextData.document.get().getSite()==null){
+                while (ContextData.document.get().getSite() == null) {
                     ContextData.document.prev();
                 }
             }
@@ -187,7 +224,7 @@ public class DocumentView extends GestureView {
     public void onSwipeBottom() {
         if (activity != null) {
             //setShowBottom(!showBottom);
-            if(ContextData.document!=null){
+            if (ContextData.document != null) {
                 ContextData.document.get().getSite().prev();
             }
             activity.refresh();
@@ -198,9 +235,9 @@ public class DocumentView extends GestureView {
     public void onSwipeRight() {
         if (activity != null) {
             //setShowRight(!showRight);
-            if(ContextData.document!=null){
+            if (ContextData.document != null) {
                 ContextData.document.next();
-                while (ContextData.document.get().getSite()==null){
+                while (ContextData.document.get().getSite() == null) {
                     ContextData.document.next();
                 }
             }

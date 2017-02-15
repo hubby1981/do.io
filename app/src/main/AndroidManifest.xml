@@ -8,6 +8,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".MainActivity"
@@ -27,7 +28,9 @@
         <activity
             android:name=".FinanceActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".DocumentViewActivity"></activity>
+        <activity
+            android:name=".DocumentViewActivity"
+            android:screenOrientation="sensorLandscape"></activity>
     </application>
 
 </manifest>

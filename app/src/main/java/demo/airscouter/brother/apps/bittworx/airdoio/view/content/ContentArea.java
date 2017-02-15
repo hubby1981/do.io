@@ -24,8 +24,8 @@ public class ContentArea {
         this.cells = cells;
     }
 
-    public void draw(Canvas canvas) {
-        RectF bounds = G.getRectF(canvas);
+    public void draw(Canvas canvas, RectF boundsExternal) {
+        RectF bounds = boundsExternal == null ? G.getRectF(canvas) : boundsExternal;
         GridManager manager = new GridManager(
                 G.getVerticalLines(bounds, bounds.width() / cells),
                 G.getHorizontalLines(bounds, bounds.height() / rows),
@@ -36,6 +36,8 @@ public class ContentArea {
                 item.getValue().draw(canvas, manager.getMergeRect(item.getKey().cell, item.getKey().row));
 
         }
+
+
     }
 
     public ContentArea add(int row, int cell, Content content) {
@@ -53,11 +55,14 @@ public class ContentArea {
         }
     }
 
-    public void touch(float x,float y){
+    public void touch(float x, float y) {
 
         for (Map.Entry<AreaDef, Content> item : contents.entrySet()) {
-            if(item.getValue().isRunable()){
-                ((RunableContent)item.getValue()).touch(x,y);
+            if (item.getValue().isRunable() &&item.getValue()!=null) {
+                try{
+                    ((RunableContent) item.getValue()).touch(x, y);
+                }catch(Exception e){}
+
             }
         }
     }

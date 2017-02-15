@@ -1,6 +1,7 @@
 package demo.airscouter.brother.apps.bittworx.airdoio.view.content;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +15,18 @@ import demo.airscouter.brother.apps.bittworx.airdoio.helper.Iter;
 public abstract class ElemIter<T> {
     private List<T> list = new ArrayList<>();
     private int area = 0;
-    private long period=0l;
+    private long period = 0l;
+
     public ElemIter() {
 
     }
 
 
-    public ElemIter(long period){
+    public ElemIter(long period) {
         this.period = period;
     }
 
-    public long getPeriod(){
+    public long getPeriod() {
         return period;
     }
 
@@ -44,17 +46,27 @@ public abstract class ElemIter<T> {
         area = area < 0 ? 0 : area;
     }
 
-    public void draw(Canvas canvas) {
-        if(isSingle()){
-            drawElem(get(), canvas);
+    public void draw(Canvas canvas,RectF bounds) {
+        if (isSingle()) {
+            drawElem(get(), canvas,bounds);
 
-        }else{
+        } else {
+
             for (T t : getAll()) {
-                drawElem(t,canvas);
+                drawElem(t, canvas,bounds);
+
             }
         }
     }
 
+    public void clearWith(T item) {
+        list.clear();
+        list.add(item);
+        list.set(0, item);
+    }
+    public int size(){
+        return list.size();
+    }
 
 
     public T get() {
@@ -64,13 +76,12 @@ public abstract class ElemIter<T> {
         return null;
     }
 
-    public List<T> getAll(){
+    public List<T> getAll() {
 
-        List<T> result=new ArrayList<>();
-        if (isSingle())
-        {
+        List<T> result = new ArrayList<>();
+        if (isSingle()) {
             result.add(get());
-        }else {
+        } else {
             int index = 0;
             for (T t : list) {
                 if (area >= index) {
@@ -82,7 +93,12 @@ public abstract class ElemIter<T> {
         return result;
     }
 
-    protected abstract void drawElem(T elem, Canvas canvas);
+    public void setArea(int area){
+        this.area = area;
+        onNext();
+    }
+
+    protected abstract void drawElem(T elem, Canvas canvas,RectF bounds);
 
     public void prev() {
         area = Iter.prev(area, list.size());
@@ -90,25 +106,26 @@ public abstract class ElemIter<T> {
     }
 
     public void next() {
-        area = Iter.next(area, list.size());onNext();
+        area = Iter.next(area, list.size());
+        onNext();
     }
 
 
-    public void onNext(){
+    public void onNext() {
 
 
     }
 
-    public void onPrev(){
+    public void onPrev() {
 
     }
 
 
-    public void onEnter(){
+    public void onEnter() {
 
     }
 
-    public void onLeave(){
+    public void onLeave() {
 
     }
 

@@ -1,6 +1,7 @@
 package demo.airscouter.brother.apps.bittworx.airdoio.helper;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,10 +26,10 @@ public class ContextData {
         }
 
         @Override
-        protected void drawElem(Document elem, Canvas canvas) {
+        protected void drawElem(Document elem, Canvas canvas,RectF bounds) {
             if (elem != null)
                 if (elem.getSite() != null)
-                    elem.getSite().draw(canvas);
+                    elem.getSite().draw(canvas,bounds);
         }
 
         @Override
