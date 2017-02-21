@@ -33,6 +33,8 @@ public class DocumentView extends GestureView {
     Grid vertical;
     Grid horizontal;
     Grid horizontalLayer;
+    Grid verticalLayer;
+
     Paint backLeft = new Paint();
     Paint backMiddle = new Paint();
     Paint backRight = new Paint();
@@ -72,15 +74,15 @@ public class DocumentView extends GestureView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean ret =true;
+        boolean ret = true;
         if (horizontalLayer != null && horizontalLayer.size() > 0) {
             int index = 0;
             for (RectF rectF : horizontalLayer) {
                 if (rectF.contains(event.getX(), event.getY())) {
                     if (ContextData.document != null) {
-                        if (ContextData.document.get() != null&&  ContextData.document.get().getSite()!=null) {
+                        if (ContextData.document.get() != null && ContextData.document.get().getSite() != null) {
                             ContextData.document.get().getSite().setArea(index);
-                            ret=false;
+                            ret = false;
                             if (ContextData.activity != null)
                                 ContextData.activity.refresh();
                         }
@@ -89,11 +91,11 @@ public class DocumentView extends GestureView {
                 index++;
             }
         }
-        if(ret)
+        if (ret)
             ret = super.onTouchEvent(event);
 
         if (!ret) {
-             if (ContextData.document != null && ContextData.document.getAll() != null) {
+            if (ContextData.document != null && ContextData.document.getAll() != null) {
                 for (Document document : ContextData.document.getAll()) {
                     if (document != null && document.getSite() != null) {
                         for (ContentArea contentArea : document.getSite().getAll()) {
@@ -110,7 +112,9 @@ public class DocumentView extends GestureView {
     @Override
     public void onDraw(Canvas canvas) {
         RectF bounds = new RectF(canvas.getClipBounds().left, canvas.getClipBounds().top, canvas.getClipBounds().right, canvas.getClipBounds().bottom);
-        RectF layers = G.getRectFShrinkWidth(bounds, 30);
+        RectF layers2 = G.getRectFShrinkHeight(bounds, 20);
+        RectF layers = G.getRectFShrinkWidth(new RectF(bounds.left,layers2.bottom,bounds.right,bounds.bottom), 30);
+
         horizontal = G.getHorizontalLines(bounds, bounds.height() / 3);
         vertical = G.getVerticalLines(horizontal.get(1), bounds.width() / 3);
 
@@ -130,22 +134,51 @@ public class DocumentView extends GestureView {
             if (ContextData.document.get() != null) {
                 Paint p = new Paint();
                 p.setStyle(Paint.Style.FILL);
-                p.setColor(Color.argb(185, C.getRedArray()[7], C.getGreenArray()[7], C.getBlueArray()[7]));
-                ContextData.document.get().getSite().draw(canvas, G.getRectFWithSources(bounds, layers.right));
+                RectF shrinked = G.getRectFWithSources(bounds, layers.right);
+                shrinked = G.getRectFWithSourcesHeight(shrinked, layers2.bottom);
+                ContextData.document.get().getSite().draw(canvas, shrinked);
                 int max = ContextData.document.get().getSite().size();
-                horizontalLayer = G.getHorizontalLines(layers, bounds.height() / max);
-                int all = ContextData.document.get().getSite().getAll().size();
-                int index = 0;
-                for (RectF rectF : horizontalLayer) {
+                horizontalLayer = G.getHorizontalLines(layers, layers.height() / max);
+                int size = (int)layers2.width()/ContextData.document.size();
+                verticalLayer = G.getVerticalLines(layers2, size);
 
-                    TextHelper.drawText(canvas,Integer.toString(index+1),rectF,0.5f,TextHelper.getFont(rectF,Color.WHITE,30));
+                int all = ContextData.document.get().getSite().getAll().size();
+                int all2 = ContextData.document.getArea();
+
+                int index = 0;
+                for (RectF rectF : verticalLayer) {
+                    p.setColor(Color.argb(185, C.getRedArray()[9], C.getGreenArray()[9], C.getBlueArray()[9]));
+                    if (index <= all2) {
+                        if (index == all2) {
+                            p.setColor(Color.argb(185, C.getRedArray()[5], C.getGreenArray()[5], C.getBlueArray()[5]));
+
+                        }
+                        canvas.drawRect(rectF, p);
+                    }
+                    TextHelper.drawText(canvas, Integer.toString(index + 1), rectF, 0.35f, TextHelper.getFont(rectF, Color.WHITE, 30));
+                    index++;
+
+                }
+                index=0;
+                for (RectF rectF : horizontalLayer) {
+                    p.setColor(Color.argb(185, C.getRedArray()[7], C.getGreenArray()[7], C.getBlueArray()[7]));
+
                     if (index < all) {
+                        if (index + 1 == all) {
+                            p.setColor(Color.argb(185, C.getRedArray()[5], C.getGreenArray()[5], C.getBlueArray()[5]));
+
+                        }
                         canvas.drawRect(rectF, p);
                     }
 
+
+                    TextHelper.drawText(canvas, Integer.toString(index + 1), rectF, 0.5f, TextHelper.getFont(rectF, Color.WHITE, 30));
+
                     index++;
                 }
-                G.showGrid(canvas, horizontalLayer, Color.WHITE);
+                G.showGrid(canvas, horizontalLayer, Color.WHITE,4);
+                G.showGrid(canvas, verticalLayer, Color.WHITE,4);
+
             }
         }
 

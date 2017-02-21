@@ -46,9 +46,17 @@ public class G {
     public static RectF getRectFShrinkWidth(RectF rectF,float factor){
         return new RectF(rectF.left, rectF.top, rectF.left+ rectF.width()/factor, rectF.bottom);
     }
+
+    public static RectF getRectFShrinkHeight(RectF rectF,float factor){
+        return new RectF(rectF.left, rectF.top, rectF.right, rectF.top+(rectF.height()/factor));
+    }
     public static RectF getRectFWithSources(RectF rectF,float left){
         return new RectF(left, rectF.top, rectF.left+ rectF.width(), rectF.bottom);
     }
+    public static RectF getRectFWithSourcesHeight(RectF rectF,float top){
+        return new RectF(rectF.left, top, rectF.right, rectF.top+rectF.height());
+    }
+
     public static Grid getVerticalLines(RectF bounds, float width) {
         int max = (int) (bounds.width() / width);
         Grid result = new Grid();
@@ -69,13 +77,16 @@ public class G {
         showGrid(canvas,lines,Color.BLACK);
     }
     public static void showGrid(Canvas canvas, ArrayList<RectF> lines,int color) {
+        showGrid(canvas,lines,color,1);
+
+    }
+    public static void showGrid(Canvas canvas, ArrayList<RectF> lines,int color,int size) {
         Paint liner = new Paint();
         liner.setStyle(Paint.Style.STROKE);
         liner.setColor(color);
-        liner.setStrokeWidth(1);
+        liner.setStrokeWidth(size);
         for (RectF line : lines) {
             canvas.drawRect(line, liner);
         }
     }
-
 }

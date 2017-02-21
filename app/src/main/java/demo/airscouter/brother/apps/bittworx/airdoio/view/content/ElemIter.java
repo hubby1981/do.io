@@ -21,6 +21,10 @@ public abstract class ElemIter<T> {
 
     }
 
+    public void clear(){
+        list.clear();
+    }
+
 
     public ElemIter(long period) {
         this.period = period;
@@ -53,10 +57,19 @@ public abstract class ElemIter<T> {
         } else {
 
             for (T t : getAll()) {
-                drawElem(t, canvas,bounds);
+                drawElem(t,canvas,bounds);
+                T t2 = checkNext(t);
+                if(!t2.equals(t))
+                {
+                    drawElem(t2,canvas,bounds);
 
+                }
             }
         }
+    }
+
+    protected T checkNext(T item){
+        return item;
     }
 
     public void clearWith(T item) {
@@ -64,8 +77,13 @@ public abstract class ElemIter<T> {
         list.add(item);
         list.set(0, item);
     }
+
     public int size(){
         return list.size();
+    }
+
+    public int getArea(){
+        return area;
     }
 
 

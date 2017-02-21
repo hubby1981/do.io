@@ -16,13 +16,25 @@ import demo.airscouter.brother.apps.bittworx.airdoio.view.manager.GridManager;
 public class ContentArea {
     private int rows = 1;
     private int cells = 1;
+    private boolean next = false;
+    private boolean prev = false;
 
     private HashMap<AreaDef, Content> contents = new HashMap<>();
 
     public ContentArea(int rows, int cells) {
+        this(rows, cells, false);
+    }
+
+    public ContentArea(int rows, int cells, boolean next) {
+        this(rows,cells,next,false);
+    }
+    public ContentArea(int rows, int cells, boolean next,boolean prev) {
         this.rows = rows;
         this.cells = cells;
+        this.next = next;
+        this.prev = prev;
     }
+
 
     public void draw(Canvas canvas, RectF boundsExternal) {
         RectF bounds = boundsExternal == null ? G.getRectF(canvas) : boundsExternal;
@@ -45,6 +57,14 @@ public class ContentArea {
         return this;
     }
 
+    public boolean isNext() {
+        return next;
+    }
+
+    public boolean isPrev() {
+        return prev;
+    }
+
     private class AreaDef {
         int row = 0;
         int cell = 0;
@@ -58,10 +78,11 @@ public class ContentArea {
     public void touch(float x, float y) {
 
         for (Map.Entry<AreaDef, Content> item : contents.entrySet()) {
-            if (item.getValue().isRunable() &&item.getValue()!=null) {
-                try{
+            if (item.getValue().isRunable() && item.getValue() != null) {
+                try {
                     ((RunableContent) item.getValue()).touch(x, y);
-                }catch(Exception e){}
+                } catch (Exception e) {
+                }
 
             }
         }

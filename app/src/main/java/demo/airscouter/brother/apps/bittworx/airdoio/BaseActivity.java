@@ -58,6 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void openDocument(Document document) {
+        ContextData.document.clear();
         for (Container container : document.getParent().getDocuments()) {
             if (container.isDocument())
                 if (((Document) container).getSite() != null)

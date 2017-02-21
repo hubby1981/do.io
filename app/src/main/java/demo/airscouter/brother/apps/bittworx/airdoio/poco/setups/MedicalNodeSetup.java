@@ -41,6 +41,9 @@ public class MedicalNodeSetup {
     private static  List<Container> getOncologyDocuments(){
         List<Container> result = new ArrayList<>();
         result.add(new Document("Room 201").setSite(OncologyRoomsDocuments.getDoc1()));
+        result.add(new Document("Room 202").setSite(OncologyRoomsDocuments.getDoc2()));
+        result.add(new Document("Room 203").setSite(OncologyRoomsDocuments.getDoc3()));
+
         return result;
     }
 }

@@ -48,7 +48,7 @@ public class EnterpriseNodeSetup {
         result.add(new Document("3"));
         result.add(new Document("4").setSite(Projects2017Documents.getDoc2()));
         result.add(new Document("5",2.3f));
-        result.add(new Document("6"));
+        result.add(new Document("6").setSite(Projects2017Documents.getDoc1()));
         result.add(new Document("7"));
 
         return result;

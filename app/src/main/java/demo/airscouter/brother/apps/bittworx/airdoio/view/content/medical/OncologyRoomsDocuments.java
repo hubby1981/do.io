@@ -27,10 +27,16 @@ public class OncologyRoomsDocuments {
     public static Site getDoc1() {
         Site result = new Site();
 
-        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+        result.add(new ContentArea(1,1,true).add(0, 0, new Content() {
             @Override
             protected void draw(Canvas canvas, RectF bounds) {
                 B.drawBitmap(canvas, R.drawable.room_medical_single,bounds);
+            }
+        }));
+        result.add(new ContentArea(5,10).add(0, 4, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                TextHelper.drawText(canvas,"Room 201 Shapes",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
             }
         }));
         result.add(new ContentArea(1,1).add(0, 0, new Content() {
@@ -45,11 +51,11 @@ public class OncologyRoomsDocuments {
                 B.drawBitmap(canvas, R.drawable.room_medical_single_person_001,bounds);
             }
         }));
-        result.add(new ContentArea(5,5).add(2,2, new RunableContent() {
+        result.add(new ContentArea(5,10).add(4,4, new RunableContent() {
             @Override
             protected void drawContent(Canvas canvas, RectF bounds) {
 
-                TextHelper.drawText(canvas,"Patient: M. Huber",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+                TextHelper.drawText(canvas,"Patient: M. Huber - Click on the bed",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
             }
 
             @Override
@@ -61,6 +67,112 @@ public class OncologyRoomsDocuments {
                     public void run() {
 
                             ContextData.document.clearWith(new Document("").setSite(getPersonHuber()));
+                        if(ContextData.activity!=null)
+                            ContextData.activity.refresh();
+                    }
+                };
+            }
+
+
+        }));
+        return result;
+    }
+    public static Site getDoc2() {
+        Site result = new Site();
+
+        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                B.drawBitmap(canvas, R.drawable.room_medical_single,bounds);
+            }
+        }));
+        result.add(new ContentArea(5,10).add(0, 4, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                TextHelper.drawText(canvas,"Room 202 Shapes",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+        }));
+        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                B.drawBitmap(canvas, R.drawable.room_medical_single_furniture,bounds);
+            }
+        }));
+        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                B.drawBitmap(canvas, R.drawable.room_medical_single_person_001,bounds);
+            }
+        }));
+        result.add(new ContentArea(5,10).add(4,4, new RunableContent() {
+            @Override
+            protected void drawContent(Canvas canvas, RectF bounds) {
+
+                TextHelper.drawText(canvas,"Patient: R. Rabbit - Click on the bed",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+
+            @Override
+            protected Runnable getAction() {
+
+
+                return new Runnable() {
+                    @Override
+                    public void run() {
+
+                        ContextData.document.clearWith(new Document("").setSite(getPersonHuber()));
+                        if(ContextData.activity!=null)
+                            ContextData.activity.refresh();
+                    }
+                };
+            }
+
+
+        }));
+        return result;
+    }
+    public static Site getDoc3() {
+        Site result = new Site();
+
+        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                B.drawBitmap(canvas, R.drawable.room_medical_single,bounds);
+            }
+        }));
+        result.add(new ContentArea(5,10).add(0, 4, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                TextHelper.drawText(canvas,"Room 203 Shapes",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+        }));
+        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                B.drawBitmap(canvas, R.drawable.room_medical_single_furniture,bounds);
+            }
+        }));
+        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+                B.drawBitmap(canvas, R.drawable.room_medical_single_person_001,bounds);
+            }
+        }));
+        result.add(new ContentArea(5,10).add(4,4, new RunableContent() {
+            @Override
+            protected void drawContent(Canvas canvas, RectF bounds) {
+
+                TextHelper.drawText(canvas,"Patient: J. John - Click on the bed",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+
+            @Override
+            protected Runnable getAction() {
+
+
+                return new Runnable() {
+                    @Override
+                    public void run() {
+
+                        ContextData.document.clearWith(new Document("").setSite(getPersonHuber()));
                         if(ContextData.activity!=null)
                             ContextData.activity.refresh();
                     }
