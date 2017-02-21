@@ -58,12 +58,6 @@ public abstract class ElemIter<T> {
 
             for (T t : getAll()) {
                 drawElem(t,canvas,bounds);
-                T t2 = checkNext(t);
-                if(!t2.equals(t))
-                {
-                    drawElem(t2,canvas,bounds);
-
-                }
             }
         }
     }
