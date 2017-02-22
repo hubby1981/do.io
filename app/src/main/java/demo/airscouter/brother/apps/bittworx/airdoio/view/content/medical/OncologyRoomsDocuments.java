@@ -33,7 +33,7 @@ public class OncologyRoomsDocuments {
                 B.drawBitmap(canvas, R.drawable.room_medical_single,bounds);
             }
         }));
-        result.add(new ContentArea(5,10).add(0, 4, new Content() {
+        result.add(new ContentArea(5,10,true).add(0, 4, new Content() {
             @Override
             protected void draw(Canvas canvas, RectF bounds) {
                 TextHelper.drawText(canvas,"Room 201 Shapes",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
@@ -80,7 +80,7 @@ public class OncologyRoomsDocuments {
     public static Site getDoc2() {
         Site result = new Site();
 
-        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+        result.add(new ContentArea(1,1,true).add(0, 0, new Content() {
             @Override
             protected void draw(Canvas canvas, RectF bounds) {
                 B.drawBitmap(canvas, R.drawable.room_medical_single,bounds);
@@ -133,7 +133,7 @@ public class OncologyRoomsDocuments {
     public static Site getDoc3() {
         Site result = new Site();
 
-        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+        result.add(new ContentArea(1,1,true).add(0, 0, new Content() {
             @Override
             protected void draw(Canvas canvas, RectF bounds) {
                 B.drawBitmap(canvas, R.drawable.room_medical_single,bounds);
@@ -186,14 +186,52 @@ public class OncologyRoomsDocuments {
 
     public static Site getPersonHuber(){
         Site result = new Site();
-        result.add(new ContentArea(1,1).add(0, 0, new Content() {
+        result.add(new ContentArea(6,12,true).add(1,1, new Content() {
             @Override
             protected void draw(Canvas canvas, RectF bounds) {
-                Paint p = new Paint();
-                p.setStyle(Paint.Style.FILL);
-                p.setColor(Color.argb(128, C.getRedArray()[1],C.getGreenArray()[1],C.getBlueArray()[1]));
-                canvas.drawRect(bounds,p);
+                B.drawBitmap(canvas, R.drawable.pf,bounds);
 
+
+            }
+        }));
+        result.add(new ContentArea(6,10,true).add(0, 2, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+
+
+                TextHelper.drawTextLeft(canvas,"Patient: ",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+        }));
+        result.add(new ContentArea(6,10,true).add(1, 2, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+
+
+                TextHelper.drawTextLeft(canvas,"Age: ",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+        }));
+        result.add(new ContentArea(6,10,true).add(0, 4, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+
+
+                TextHelper.drawTextLeft(canvas,"M. Huber",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+        }));
+        result.add(new ContentArea(6,10,true).add(1, 4, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+
+
+                TextHelper.drawTextLeft(canvas,"46",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
+            }
+        }));
+        result.add(new ContentArea(6,10).add(2, 2, new Content() {
+            @Override
+            protected void draw(Canvas canvas, RectF bounds) {
+
+
+                TextHelper.drawTextLeft(canvas,"Diagnose: ",bounds,1,TextHelper.getFont(bounds,Color.WHITE));
             }
         }));
         return result;

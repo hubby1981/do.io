@@ -26,10 +26,10 @@ public class ContextData {
         }
 
         @Override
-        protected void drawElem(Document elem, Canvas canvas,RectF bounds) {
+        protected void drawElem(Document elem, Canvas canvas, RectF bounds) {
             if (elem != null)
                 if (elem.getSite() != null)
-                    elem.getSite().draw(canvas,bounds);
+                    elem.getSite().draw(canvas, bounds);
         }
 
         @Override
@@ -39,7 +39,16 @@ public class ContextData {
 
         @Override
         public void onEnter() {
+            checkNext();
             checkPeriod();
+        }
+
+        private void checkNext() {
+            final Document elem = get();
+            if (elem != null && elem.getSite() != null) {
+                if (elem.getSite().get().isNext())
+                    elem.getSite().next();
+            }
         }
 
         @Override
@@ -50,10 +59,14 @@ public class ContextData {
 
         @Override
         public void onNext() {
+            checkNext();
             checkPeriod();
+
         }
 
         private void checkPeriod() {
+            timer.cancel();
+            timer = new Timer();
             final Document elem = get();
             if (elem != null && elem.getSite() != null) {
                 if (elem.getSite().getPeriod() > 0) {

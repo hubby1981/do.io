@@ -40,8 +40,8 @@ public class Projects2017Documents {
                 p.setStyle(Paint.Style.FILL);
                 p.setColor(Color.BLACK);
                 canvas.drawRect(bounds, p);
-                G.showGrid(canvas,G.getVerticalLines(bounds,bounds.width()/5),Color.WHITE);
-                G.showGrid(canvas,G.getHorizontalLines(bounds,bounds.height()/2),Color.WHITE);
+                G.showGrid(canvas,G.getVerticalLines(bounds,bounds.width()/5),Color.WHITE,4);
+                G.showGrid(canvas,G.getHorizontalLines(bounds,bounds.height()/2),Color.WHITE,4);
 
             }
         }));
@@ -123,6 +123,17 @@ public class Projects2017Documents {
 
 
                 B.drawBitmap(canvas, R.drawable.project0009, bounds);
+            }
+        }));
+        result.add(new ContentArea(1,1,true).add(0,0, new Content() {
+            @Override
+            public void draw(Canvas canvas, RectF bounds) {
+
+
+                Paint p = new Paint();
+                p.setStyle(Paint.Style.FILL);
+                p.setColor(Color.argb(175,200,200,200));
+                canvas.drawRect(bounds, p);
             }
         }));
         result.add(new ContentArea(4, 5).add(1, 2, new Content() {

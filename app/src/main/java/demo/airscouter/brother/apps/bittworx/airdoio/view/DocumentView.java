@@ -91,6 +91,20 @@ public class DocumentView extends GestureView {
                 index++;
             }
         }
+        if (verticalLayer != null && verticalLayer.size() > 0 && ret) {
+            int index = 0;
+            for (RectF rectF : verticalLayer) {
+                if (rectF.contains(event.getX(), event.getY())) {
+                    if (ContextData.document != null) {
+                        ContextData.document.setArea(index);
+                        ret = false;
+                        if (ContextData.activity != null)
+                            ContextData.activity.refresh();
+                    }
+                }
+                index++;
+            }
+        }
         if (ret)
             ret = super.onTouchEvent(event);
 
@@ -113,7 +127,7 @@ public class DocumentView extends GestureView {
     public void onDraw(Canvas canvas) {
         RectF bounds = new RectF(canvas.getClipBounds().left, canvas.getClipBounds().top, canvas.getClipBounds().right, canvas.getClipBounds().bottom);
         RectF layers2 = G.getRectFShrinkHeight(bounds, 20);
-        RectF layers = G.getRectFShrinkWidth(new RectF(bounds.left,layers2.bottom,bounds.right,bounds.bottom), 30);
+        RectF layers = G.getRectFShrinkWidth(new RectF(bounds.left, layers2.bottom, bounds.right, bounds.bottom), 30);
 
         horizontal = G.getHorizontalLines(bounds, bounds.height() / 3);
         vertical = G.getVerticalLines(horizontal.get(1), bounds.width() / 3);
@@ -139,7 +153,7 @@ public class DocumentView extends GestureView {
                 ContextData.document.get().getSite().draw(canvas, shrinked);
                 int max = ContextData.document.get().getSite().size();
                 horizontalLayer = G.getHorizontalLines(layers, layers.height() / max);
-                int size = (int)layers2.width()/ContextData.document.size();
+                int size = (int) layers2.width() / ContextData.document.size();
                 verticalLayer = G.getVerticalLines(layers2, size);
 
                 int all = ContextData.document.get().getSite().getAll().size();
@@ -147,7 +161,7 @@ public class DocumentView extends GestureView {
 
                 int index = 0;
                 for (RectF rectF : verticalLayer) {
-                    p.setColor(Color.argb(185, C.getRedArray()[9], C.getGreenArray()[9], C.getBlueArray()[9]));
+                    p.setColor(Color.argb(185, C.getRedArray()[7], C.getGreenArray()[7], C.getBlueArray()[7]));
                     if (index <= all2) {
                         if (index == all2) {
                             p.setColor(Color.argb(185, C.getRedArray()[5], C.getGreenArray()[5], C.getBlueArray()[5]));
@@ -159,7 +173,7 @@ public class DocumentView extends GestureView {
                     index++;
 
                 }
-                index=0;
+                index = 0;
                 for (RectF rectF : horizontalLayer) {
                     p.setColor(Color.argb(185, C.getRedArray()[7], C.getGreenArray()[7], C.getBlueArray()[7]));
 
@@ -176,8 +190,8 @@ public class DocumentView extends GestureView {
 
                     index++;
                 }
-                G.showGrid(canvas, horizontalLayer, Color.WHITE,4);
-                G.showGrid(canvas, verticalLayer, Color.WHITE,4);
+                G.showGrid(canvas, horizontalLayer, Color.WHITE, 4);
+                G.showGrid(canvas, verticalLayer, Color.WHITE, 4);
 
             }
         }
